@@ -1,9 +1,11 @@
-import React, {useState,useReducer} from 'react';
+import React, { useReducer, useState } from "react";
+import {
+    ADD_ITEM,
+    REMOVE_ITEM
+} from '../reducers/todoReducer';
 
 const TodoForm = ({dispatch}) => {
     const [newItem, setNewItem] = useState("");
-
-    const [state, dispatch] = useReducer(todoReducer, initialState);
 
     const handleChanges = (e) => {
         setNewItem(e.target.value);
@@ -13,7 +15,7 @@ const TodoForm = ({dispatch}) => {
         e.preventDefault();
         dispatch(
             {
-                type: ADD_TODO,
+                type: ADD_ITEM,
                 payload: newItem
             }
         )
@@ -24,7 +26,7 @@ const TodoForm = ({dispatch}) => {
         e.preventDefault();
         dispatch(
             {
-                type: REMOVE_TODO
+                type: REMOVE_ITEM
             }
         )
     }
