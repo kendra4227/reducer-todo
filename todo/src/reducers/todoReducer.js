@@ -3,39 +3,24 @@ export const ADD_ITEM = "ADD_ITEM";
 export const TOGGLE_ITEM = "TOGGLE_ITEM";
 export const REMOVE_ITEM = "REMOVE_ITEM";
 //  basic reducer function
-export const todoReducer = (state,action) => {
-    switch(action.type) {
-        case('ADD_ITEM'):
-return [{...state, 
-        item:action.payload,
-         completed:false, 
-         id:Date.now()
-        }];
+export const todoReducer = (state, action) => {
+    switch (action.type) {
+      case "TOGGLE_ITEM":
+        state.map(item =>
+          item.id === action.payload.id
+            ? (item.completed = action.payload.completed)
+            : null
+        );
+        return [...state];
+      case "ADD_ITEM":
+        return [...state, action.payload];
+      case "CLEAR_ITEMS":
+        return [...state.filter(item => item.completed === false)];
+      default:
+        break;
+    }
+  };
 
-        case('TOGGLE_ITEM'):
-        let Clickedtoggle =
-            state.map(item => {
-                if (item.id === action.payload ) {
-                    return {...item, completed: !item.completed}
-                } else {
-                    return item;
-            }
-        })
-        return Clickedtoggle
-          case('REMOVE_ITEM'):
-          return(
-                state.filter(item => {
-                    if (item.completed === true){
-                        return !item.completed
-                    } else {
-                        return item;
-                    }
-                })
-            );
-        default:
-            return state;
-};
-}
 // initialize state
 export const initialState = {
     item :'Learn about reducers',

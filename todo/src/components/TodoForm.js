@@ -1,8 +1,7 @@
 import React, {  useState } from "react";
-//import {todoReducer,initialState} from '../reducers/todoReducer';
+
 
 const TodoForm = ({dispatch}) => {
-   // const [state,dispatch] = useReducer(todoReducer, initialState);
     const [newItem, setNewItem] = useState("");
 
 
@@ -12,7 +11,7 @@ const TodoForm = ({dispatch}) => {
         if (e.target.name === "add") {
             if (newItem === "") {
             } else {
-              dispatch({
+              dispatch({ //dispatch is not a function?
                 type: "ADD_ITEM",
                 payload: {
                   item: newItem,
