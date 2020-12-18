@@ -1,28 +1,42 @@
-import React, { useReducer, useState } from "react";
-import {todoReducer,initialState} from '../reducers/todoReducer';
+import React, {  useState } from "react";
+//import {todoReducer,initialState} from '../reducers/todoReducer';
 
-const TodoForm = () => {
-    const [state,dispatch] = useReducer(todoReducer, initialState);
+const TodoForm = ({dispatch}) => {
+   // const [state,dispatch] = useReducer(todoReducer, initialState);
     const [newItem, setNewItem] = useState("");
 
+
+    const handleClick = e => {
+        e.preventDefault();
+
+        if (e.target.name === "add") {
+            if (newItem === "") {
+            } else {
+              dispatch({
+                type: "ADD_ITEM",
+                payload: {
+                  item: newItem,
+                  completed: false,
+                  id: new Date().getTime()
+                }
+              });
+              setNewItem("");
+            }
+          }
+      
+          if (e.target.name === "remove") {
+            dispatch({ type: "REMOVE_ITEMS" });
+          }
+        };
     const handleChanges = (e) => {
         setNewItem(e.target.value);
     };
 
     return (
         <div>
-            <h1>To-do List</h1>
-            {state.map(state => {
-                return (
-                    <div onClick={() => {
-                        dispatch({ type: "Toggle", payload: state.id })
-                    }} >
-                        {state.item}
-                    </div>
-                )
-            }
-    )
-}
+            
+            <form>
+           
 <input
                 className="Input"
                 type="text"
@@ -32,16 +46,24 @@ const TodoForm = () => {
             />
 
 
-            <button onClick={() => { dispatch({ type: "ADD_ITEM", payload: newItem }); }}>
+            <button className="add-button"
+        name="add"
+        type="submit"
+        onClick={handleClick}> 
                 Add Item
         </button>
 
 
-            <button onClick={() => { dispatch({ type: "REMOVE_ITEM", payload: newItem }) }}>
-                Clear Completed
-        </button>
-        </div>
-    )
-};
-
+        <button
+        className="clear-button"
+        name="clear"
+        type="submit"
+        onClick={handleClick}
+      >
+        Clear
+      </button>
+    </form>
+    </div>
+  );
+    }
 export default TodoForm;
