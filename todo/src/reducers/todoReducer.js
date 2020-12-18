@@ -1,24 +1,35 @@
-import React, {useState, useReducer} from 'react';
-
 // actions
-export const ADD_TODO = "ADD-ITEM";
+export const ADD_ITEM = "ADD_ITEM";
 export const TOGGLE_ITEM = "TOGGLE_ITEM";
-export const UPDATE_TODO = "REMOVE_ITEM";
+export const REMOVE_ITEM = "REMOVE_ITEM";
 //  basic reducer function
-const todoReducer = (state,action) => {
+export const todoReducer = (state,action) => {
     switch(action.type) {
         case('ADD_ITEM'):
-return {...state, item:action.payload, id:Date.now()};
+return [{...state, 
+        item:action.payload,
+         completed:false, 
+         id:Date.now()
+        }];
+
         case('TOGGLE_ITEM'):
-        return (
+        let Clickedtoggle =
             state.map(item => {
-                return item.id === action.payload ? {...item, completed: !item.completed} : item
-            })
-        )
+                if (item.id === action.payload ) {
+                    return {...item, completed: !item.completed}
+                } else {
+                    return item;
+            }
+        })
+        return Clickedtoggle
           case('REMOVE_ITEM'):
           return(
                 state.filter(item => {
-                    item.id !== action.payload
+                    if (item.completed === true){
+                        return !item.completed
+                    } else {
+                        return item;
+                    }
                 })
             );
         default:
